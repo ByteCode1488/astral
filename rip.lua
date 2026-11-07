@@ -233,16 +233,17 @@ local Library; do
 	local Rgb = Color3.fromRGB
 	local ThemeKeys = { "Background", "Tab", "Outline", "Inline", "Text", "Inactive Text", "Accent", "Element", "Gradient", "Shadow", "Hovered Element" }
 	local Themes = {
-		["Blossom"] = {
-			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
-            Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
-            Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
-            Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
-		},
-		["Swift shitty theme"] = {
+		["Swift"] = {
 			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
 			Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
 			Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
+			Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
+		},
+		["Blossom"] = {
+			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
+			Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
+			Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
+			Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
 		},
 		["Afterglow"] = {
 			Background = Rgb(28, 24, 21), Tab = Rgb(37, 31, 28), Outline = Rgb(51, 46, 42), Inline = Rgb(34, 29, 25),
@@ -305,7 +306,7 @@ local Library; do
 			Theme[Derived] = Preset[Derived] or Preset[Base]
 		end
 	end
-	LoadPreset(Themes.Blossom)
+	LoadPreset(Themes.Swift)
 	Library.Theme = Theme
 
 	local ThemeRegistry = setmetatable({}, { __mode = "k" })
@@ -600,6 +601,36 @@ local Library; do
 		return Object
 	end
 	Library.Create = function(_, ...) return Create(...) end
+
+	-- Универсальный перетаскиватель любого GuiObject
+	function Library:MakeDraggable(Frame, Handle)
+		Handle = Handle or Frame
+		local Dragging, DragInput, DragStart, StartPos = false, nil, nil, nil
+		local function Update(Input)
+			if not Dragging then return end
+			local Delta = Input.Position - DragStart
+			Frame.Position = UDim2.new(StartPos.X.Scale, StartPos.X.Offset + Delta.X, StartPos.Y.Scale, StartPos.Y.Offset + Delta.Y)
+		end
+		Handle.InputBegan:Connect(function(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = true
+				DragStart = Input.Position
+				StartPos = Frame.Position
+				Input.Changed:Connect(function()
+					if Input.UserInputState == Enum.UserInputState.End then Dragging = false end
+				end)
+			end
+		end)
+		Handle.InputChanged:Connect(function(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
+				DragInput = Input
+			end
+		end)
+		UserInputService.InputChanged:Connect(function(Input)
+			if Input == DragInput and Dragging then Update(Input) end
+		end)
+		return Frame
+	end
 
 	local function Corner(Parent, Radius)
 		return Create("UICorner", { CornerRadius = UDim.new(0, Radius or 5), Parent = Parent })
