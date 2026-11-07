@@ -1,3 +1,6 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
 
 local Library; do
 	local cloneref = (typeof(cloneref) == "function" and cloneref) or function(Object) return Object end
@@ -16,13 +19,13 @@ local Library; do
 	local LocalPlayer = Players.LocalPlayer
 
 	local Env = (typeof(getgenv) == "function" and getgenv()) or _G
-	if type(Env.SwiftLibrary) == "table" and type(Env.SwiftLibrary.Unload) == "function" then
-		pcall(Env.SwiftLibrary.Unload, Env.SwiftLibrary)
+	if type(Env.BlossomLibrary) == "table" and type(Env.BlossomLibrary.Unload) == "function" then
+		pcall(Env.BlossomLibrary.Unload, Env.BlossomLibrary)
 	end
 
 	Library = {
 		Version = "1.0.0",
-		Folder = "Swift",
+		Folder = "Blossom",
 
 		Flags = {},
 		Elements = {},
@@ -36,7 +39,7 @@ local Library; do
 		Notifications = {},
 
 		Casing = "Normal",
-		ThemeName = "Swift",
+		ThemeName = "Blossom",
 		TweenTime = 0.25,
 		EasingStyle = Enum.EasingStyle.Quart,
 		Unloaded = false,
@@ -45,7 +48,7 @@ local Library; do
 		Font = "Inter",
 	}
 	Library.__index = Library
-	Env.SwiftLibrary = Library
+	Env.BlossomLibrary = Library
 
 	local FS = {}; do
 		local MemoryFiles = {}
@@ -197,7 +200,7 @@ local Library; do
 	local Icons; do
 		local function Thumb(Id) return "rbxthumb://type=Asset&id=" .. Id .. "&w=150&h=150" end
 		Icons = {
-			Logo = { Image = "rbxassetid://83222639901823", Logo = true },
+			Logo = { Image = "rbxassetid://4915391502", Logo = true },
 			Bullseye = "rbxassetid://88639165254091",
 			Smile = { Image = Thumb(11955884989), RectOffset = Vector2.new(20, 20), RectSize = Vector2.new(110, 110) },
 			Globe = "rbxassetid://11887653877",
@@ -306,7 +309,7 @@ local Library; do
 			Theme[Derived] = Preset[Derived] or Preset[Base]
 		end
 	end
-	LoadPreset(Themes.Swift)
+	LoadPreset(Themes.Blossom)
 	Library.Theme = Theme
 
 	local ThemeRegistry = setmetatable({}, { __mode = "k" })
@@ -506,7 +509,7 @@ local Library; do
 		end
 		function Library:SaveLayout()
 			local Data = Library:GetLayout()
-			Env.SwiftLayout = Data
+			Env.BlossomLayout = Data
 			local Okay, Json = pcall(HttpService.JSONEncode, HttpService, Data)
 			if not Okay or type(Json) ~= "string" then return false end
 			if Json == LastSaved then return true end
@@ -515,7 +518,7 @@ local Library; do
 			return false
 		end
 		function Library:LoadLayout(Data)
-			if Data == nil then Data = FS.Read(Path) or Env.SwiftLayout end
+			if Data == nil then Data = FS.Read(Path) or Env.BlossomLayout end
 			if type(Data) == "string" then
 				local Okay, Decoded = pcall(HttpService.JSONDecode, HttpService, Data)
 				if not Okay then return false end
@@ -855,7 +858,7 @@ local Library; do
 	local function SafeCall(Callback, ...)
 		if type(Callback) ~= "function" then return end
 		local Ok, Error = pcall(Callback, ...)
-		if not Ok then warn("[Swift] callback error: " .. tostring(Error)) end
+		if not Ok then warn("[Blossom] callback error: " .. tostring(Error)) end
 	end
 
 	local ThemeTween; do
@@ -871,9 +874,9 @@ local Library; do
 			Gui.Parent = GuiParent
 			return Gui
 		end
-		Library.HudGui = Layer("SwiftHud", 9000)
-		Library.MenuGui = Layer("SwiftMenu", 9001)
-		Library.OverlayGui = Layer("SwiftOverlay", 9002)
+		Library.HudGui = Layer("BlossomHud", 9000)
+		Library.MenuGui = Layer("BlossomMenu", 9001)
+		Library.OverlayGui = Layer("BlossomOverlay", 9002)
 
 		function ThemeTween(Object, Property, Key, Time)
 			local Entry = ThemeRegistry[Object]
@@ -1207,6 +1210,7 @@ local Library; do
 			})
 			Corner(Frame, Radius or 6)
 			Stroke(Frame, "Outline")
+			Library:MakeDraggable(Frame, Frame)
 			return Frame
 		end
 
@@ -1274,7 +1278,7 @@ local Library; do
 		function Library:CreateWindow(Config)
 			Config = Config or {}
 			local Self = setmetatable({
-				Title = Config.Title or "Swift",
+				Title = Config.Title or "Blossom",
 				Tabs = {},
 				Sections = {},
 				Floating = {},
@@ -1298,6 +1302,9 @@ local Library; do
 			Self.Holder = Holder
 			Self.LayoutKey = "Window/" .. tostring(Config.LayoutId or #Library.Windows)
 			Layout.TrackPosition(Self.LayoutKey, Holder)
+
+			-- Окно таскается за сайдбар
+			Library:MakeDraggable(Holder, Sidebar and Sidebar or Holder)
 
 			local ShadowFrame = Create("Frame", { Size = UDim2.fromScale(1, 1), Theme = { BackgroundColor3 = "Background" }, Parent = Holder })
 			Corner(ShadowFrame, MENU_RADIUS)
@@ -3979,7 +3986,7 @@ local Library; do
 		end
 
 		local Watermark = {
-			Title = "Swift",
+			Title = "Blossom",
 			Items = { "GameName", "PlayerName" },
 			Providers = {
 				FPS = function() return FrameRate .. " fps" end,
@@ -4088,7 +4095,7 @@ local Library; do
 			if not Library.Blur then
 				if Wanted == 0 then return end
 				Library.Blur = Instance.new("BlurEffect")
-				Library.Blur.Name = "SwiftBlur"
+				Library.Blur.Name = "BlossomBlur"
 				Library.Blur.Size = 0
 				Library.Blur.Parent = Workspace.CurrentCamera or Lighting
 			end
@@ -4279,8 +4286,8 @@ local Library; do
 			AnonymousSettings:AddInput({ Text = "Avatar User ID", Flag = "AnonymousAvatar", Default = "", Finished = true, Callback = function(Value) Library:SetAnonymousAvatar(Value) end })
 			local WatermarkToggle = Menu:AddToggle({ Text = "Watermark", Default = Config.Watermark ~= false, Flag = "Watermark", Callback = function(Value) Library:SetWatermarkVisible(Value) end })
 			local WatermarkSettings = WatermarkToggle:Settings({ Title = "Watermark Settings" })
-			WatermarkSettings:AddInput({ Text = "Name", Default = Library.Watermark.Title, Placeholder = "Swift", Flag = "WatermarkName", Callback = function(Text)
-				Library.Watermark:SetTitle(Text ~= "" and Text or "Swift")
+			WatermarkSettings:AddInput({ Text = "Name", Default = Library.Watermark.Title, Placeholder = "Blossom", Flag = "WatermarkName", Callback = function(Text)
+				Library.Watermark:SetTitle(Text ~= "" and Text or "Blossom")
 			end })
 			WatermarkSettings:AddMultiDropdown({
 				Text = "Items",
@@ -4348,7 +4355,7 @@ local Library; do
 			for _, Gui in { Library.HudGui, Library.MenuGui, Library.OverlayGui } do
 				pcall(function() Gui:Destroy() end)
 			end
-			if Env.SwiftLibrary == Library then Env.SwiftLibrary = nil end
+			if Env.BlossomLibrary == Library then Env.BlossomLibrary = nil end
 		end
 
 		function Library:OnUnload(Callback)
@@ -6129,7 +6136,7 @@ local Library; do
 			Create("Frame", { Position = UDim2.new(1, 0, 0, 0), Size = UDim2.new(0, 1, 1, 0), Theme = { BackgroundColor3 = "Outline" }, Parent = Side })
 			local Logo = Library:Logo(Side, 26)
 			Logo.Position = UDim2.fromOffset(18, 20)
-			Create("TextLabel", { Position = UDim2.fromOffset(54, 18), Size = UDim2.new(1, -60, 0, 20), Text = Config.Title or "Swift", TextSize = 18, TextXAlignment = Enum.TextXAlignment.Left, Theme = { TextColor3 = "Text" }, Parent = Side })
+			Create("TextLabel", { Position = UDim2.fromOffset(54, 18), Size = UDim2.new(1, -60, 0, 20), Text = Config.Title or "Blossom", TextSize = 18, TextXAlignment = Enum.TextXAlignment.Left, Theme = { TextColor3 = "Text" }, Parent = Side })
 			Create("TextLabel", { Position = UDim2.fromOffset(54, 37), Size = UDim2.new(1, -60, 0, 13), Text = Config.Version or ("v" .. Library.Version), NoCase = true, TextSize = 11, TextXAlignment = Enum.TextXAlignment.Left, Theme = { TextColor3 = "Inactive Text" }, Parent = Side })
 			Create("TextLabel", { Position = UDim2.fromOffset(18, 76), Size = UDim2.new(1, -36, 0, 120), Text = Config.Description or "Pick a game on the right and press Launch. Your settings and configs load automatically.", TextWrapped = true, TextSize = 12, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, Theme = { TextColor3 = "Inactive Text" }, Parent = Side })
 			local UserCard = Create("Frame", { Position = UDim2.new(0, 12, 1, -62), Size = UDim2.new(1, -24, 0, 50), Theme = { BackgroundColor3 = "Tab" }, Parent = Side })
