@@ -1,4 +1,3 @@
-
 local Library; do
 	local cloneref = (typeof(cloneref) == "function" and cloneref) or function(Object) return Object end
 	local function Service(Name) return cloneref(game:GetService(Name)) end
