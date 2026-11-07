@@ -1,3 +1,4 @@
+
 local Library; do
 	local cloneref = (typeof(cloneref) == "function" and cloneref) or function(Object) return Object end
 	local function Service(Name) return cloneref(game:GetService(Name)) end
@@ -600,36 +601,6 @@ local Library; do
 	end
 	Library.Create = function(_, ...) return Create(...) end
 
-	-- Универсальный перетаскиватель любого GuiObject
-	function Library:MakeDraggable(Frame, Handle)
-		Handle = Handle or Frame
-		local Dragging, DragInput, DragStart, StartPos = false, nil, nil, nil
-		local function Update(Input)
-			if not Dragging then return end
-			local Delta = Input.Position - DragStart
-			Frame.Position = UDim2.new(StartPos.X.Scale, StartPos.X.Offset + Delta.X, StartPos.Y.Scale, StartPos.Y.Offset + Delta.Y)
-		end
-		Handle.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
-				Dragging = true
-				DragStart = Input.Position
-				StartPos = Frame.Position
-				Input.Changed:Connect(function()
-					if Input.UserInputState == Enum.UserInputState.End then Dragging = false end
-				end)
-			end
-		end)
-		Handle.InputChanged:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
-				DragInput = Input
-			end
-		end)
-		UserInputService.InputChanged:Connect(function(Input)
-			if Input == DragInput and Dragging then Update(Input) end
-		end)
-		return Frame
-	end
-
 	local function Corner(Parent, Radius)
 		return Create("UICorner", { CornerRadius = UDim.new(0, Radius or 5), Parent = Parent })
 	end
@@ -1205,7 +1176,6 @@ local Library; do
 			})
 			Corner(Frame, Radius or 6)
 			Stroke(Frame, "Outline")
-			Library:MakeDraggable(Frame, Frame)
 			return Frame
 		end
 
@@ -1297,7 +1267,6 @@ local Library; do
 			Self.Holder = Holder
 			Self.LayoutKey = "Window/" .. tostring(Config.LayoutId or #Library.Windows)
 			Layout.TrackPosition(Self.LayoutKey, Holder)
-			Library:MakeDraggable(Holder, Sidebar)
 
 			local ShadowFrame = Create("Frame", { Size = UDim2.fromScale(1, 1), Theme = { BackgroundColor3 = "Background" }, Parent = Holder })
 			Corner(ShadowFrame, MENU_RADIUS)
