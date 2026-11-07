@@ -305,7 +305,7 @@ local Library; do
 			Theme[Derived] = Preset[Derived] or Preset[Base]
 		end
 	end
-	LoadPreset(Themes.Swift)
+	LoadPreset(Themes.Blossom)
 	Library.Theme = Theme
 
 	local ThemeRegistry = setmetatable({}, { __mode = "k" })
