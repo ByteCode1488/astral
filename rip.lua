@@ -233,16 +233,16 @@ local Library; do
 	local Rgb = Color3.fromRGB
 	local ThemeKeys = { "Background", "Tab", "Outline", "Inline", "Text", "Inactive Text", "Accent", "Element", "Gradient", "Shadow", "Hovered Element" }
 	local Themes = {
-		["Swift"] = {
+		["Blossom"] = {
+			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
+            Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
+            Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
+            Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
+		},
+		["Swift shitty theme"] = {
 			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
 			Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
 			Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
-			Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
-		},
-		["Blossom"] = {
-			Background = Rgb(40, 40, 40), Tab = Rgb(43, 47, 48), Outline = Rgb(56, 60, 61), Inline = Rgb(31, 30, 28),
-			Text = Rgb(220, 222, 235), ["Inactive Text"] = Rgb(125, 128, 135), Accent = Rgb(86, 137, 200),
-			Element = Rgb(40, 44, 43), Gradient = Rgb(187, 191, 191), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(65, 70, 73),
 		},
 		["Afterglow"] = {
 			Background = Rgb(28, 24, 21), Tab = Rgb(37, 31, 28), Outline = Rgb(51, 46, 42), Inline = Rgb(34, 29, 25),
