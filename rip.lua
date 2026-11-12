@@ -236,65 +236,63 @@ local Library; do
 	local Rgb = Color3.fromRGB
 	local ThemeKeys = { "Background", "Tab", "Outline", "Inline", "Text", "Inactive Text", "Accent", "Element", "Gradient", "Shadow", "Hovered Element" }
 	local Themes = {
-		["Swift"] = {
-			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
-			Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
-			Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
-			Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
-		},
-		["Blossom"] = {
-			Background = Rgb(28, 28, 28), Tab = Rgb(37, 37, 37), Outline = Rgb(45, 45, 45), Inline = Rgb(28, 28, 28),
-			Text = Rgb(230, 230, 230), ["Inactive Text"] = Rgb(148, 148, 148), Accent = Rgb(168, 234, 181),
-			Element = Rgb(54, 54, 54), Gradient = Rgb(240, 240, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(61, 61, 61),
-			Popup = Rgb(37, 37, 37), ToggleFill = Rgb(69, 141, 84), Knob = Rgb(235, 253, 238), KnobOff = Rgb(134, 134, 134),
-		},
-		["Afterglow"] = {
-			Background = Rgb(28, 24, 21), Tab = Rgb(37, 31, 28), Outline = Rgb(51, 46, 42), Inline = Rgb(34, 29, 25),
-			Text = Rgb(255, 248, 240), ["Inactive Text"] = Rgb(148, 139, 130), Accent = Rgb(250, 140, 70),
-			Element = Rgb(40, 33, 27), Gradient = Rgb(253, 184, 117), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(56, 45, 35),
-		},
-		["Frostbite"] = {
-			Background = Rgb(16, 25, 28), Tab = Rgb(24, 34, 41), Outline = Rgb(44, 55, 61), Inline = Rgb(22, 31, 38),
-			Text = Rgb(245, 254, 255), ["Inactive Text"] = Rgb(138, 154, 164), Accent = Rgb(100, 200, 245),
-			Element = Rgb(25, 38, 47), Gradient = Rgb(160, 211, 240), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(36, 53, 62),
-		},
-		["Volt"] = {
-			Background = Rgb(14, 19, 13), Tab = Rgb(21, 28, 21), Outline = Rgb(42, 47, 40), Inline = Rgb(17, 24, 16),
-			Text = Rgb(250, 255, 242), ["Inactive Text"] = Rgb(135, 147, 131), Accent = Rgb(185, 245, 90),
-			Element = Rgb(24, 35, 19), Gradient = Rgb(186, 240, 101), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(38, 51, 32),
-		},
-		["Obsidian"] = {
-			Background = Rgb(11, 12, 16), Tab = Rgb(19, 20, 24), Outline = Rgb(36, 37, 39), Inline = Rgb(15, 16, 18),
-			Text = Rgb(250, 251, 254), ["Inactive Text"] = Rgb(121, 122, 126), Accent = Rgb(150, 122, 245),
-			Element = Rgb(21, 22, 26), Gradient = Rgb(179, 167, 212), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(32, 36, 39),
-		},
-		["Sakura Drift"] = {
-			Background = Rgb(28, 23, 27), Tab = Rgb(41, 30, 36), Outline = Rgb(54, 45, 50), Inline = Rgb(35, 26, 31),
-			Text = Rgb(255, 249, 254), ["Inactive Text"] = Rgb(158, 142, 152), Accent = Rgb(245, 135, 180),
-			Element = Rgb(46, 31, 38), Gradient = Rgb(252, 178, 212), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(56, 41, 48),
-		},
-		["Neon Mirage"] = {
-			Background = Rgb(14, 17, 26), Tab = Rgb(22, 26, 44), Outline = Rgb(42, 45, 60), Inline = Rgb(17, 20, 35),
-			Text = Rgb(243, 246, 255), ["Inactive Text"] = Rgb(134, 139, 166), Accent = Rgb(40, 230, 210),
-			Element = Rgb(23, 30, 49), Gradient = Rgb(107, 216, 254), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(35, 42, 68),
-		},
-		["Copper Dust"] = {
-			Background = Rgb(30, 27, 22), Tab = Rgb(42, 34, 25), Outline = Rgb(61, 54, 46), Inline = Rgb(38, 31, 25),
-			Text = Rgb(250, 240, 231), ["Inactive Text"] = Rgb(150, 138, 126), Accent = Rgb(200, 135, 70),
-			Element = Rgb(45, 33, 24), Gradient = Rgb(196, 181, 139), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(53, 45, 43),
-		},
-		["Abyss"] = {
-			Background = Rgb(7, 14, 16), Tab = Rgb(13, 24, 29), Outline = Rgb(30, 40, 42), Inline = Rgb(9, 19, 21),
-			Text = Rgb(225, 241, 247), ["Inactive Text"] = Rgb(112, 128, 134), Accent = Rgb(30, 185, 165),
-			Element = Rgb(12, 25, 31), Gradient = Rgb(78, 181, 174), Shadow = Rgb(0, 0, 0), ["Hovered Element"] = Rgb(21, 39, 43),
-		},
-		["Porcelain"] = {
-			Background = Rgb(233, 232, 227), Tab = Rgb(246, 245, 240), Outline = Rgb(204, 203, 197), Inline = Rgb(251, 250, 245),
-			Text = Rgb(48, 49, 54), ["Inactive Text"] = Rgb(121, 121, 113), Accent = Rgb(72, 112, 197),
-			Element = Rgb(236, 237, 241), Gradient = Rgb(160, 171, 193), Shadow = Rgb(84, 82, 83), ["Hovered Element"] = Rgb(225, 225, 217),
-		},
-	}
-	local ThemeOrder = { "Swift", "Blossom", "Afterglow", "Frostbite", "Volt", "Obsidian", "Sakura Drift", "Neon Mirage", "Copper Dust", "Abyss", "Porcelain" }
+	Blossom = {
+		Background = RGB(42, 44, 52), Tab = RGB(48, 50, 58), Outline = RGB(65, 68, 80), Inline = RGB(56, 58, 68),
+		Text = RGB(232, 234, 245), InactiveText = RGB(126, 130, 148), Accent = RGB(113, 159, 226), Element = RGB(54, 57, 68),
+		Gradient = RGB(172, 187, 209), Shadow = RGB(0, 0, 0), HoveredElement = RGB(72, 77, 90),
+	},
+	Afterglow = {
+		Background = RGB(34, 28, 25), Tab = RGB(30, 23, 20), Outline = RGB(60, 46, 38), Inline = RGB(42, 33, 29),
+		Text = RGB(240, 232, 226), InactiveText = RGB(140, 122, 110), Accent = RGB(255, 145, 60), Element = RGB(49, 34, 27),
+		Gradient = RGB(172, 167, 163), Shadow = RGB(0, 0, 0), HoveredElement = RGB(70, 51, 42),
+	},
+	Frostbite = {
+		Background = RGB(22, 30, 38), Tab = RGB(16, 25, 32), Outline = RGB(42, 58, 72), Inline = RGB(27, 38, 47),
+		Text = RGB(228, 240, 248), InactiveText = RGB(114, 136, 152), Accent = RGB(86, 219, 255), Element = RGB(28, 39, 52),
+		Gradient = RGB(164, 172, 178), Shadow = RGB(0, 0, 0), HoveredElement = RGB(44, 60, 74),
+	},
+	Volt = {
+		Background = RGB(24, 24, 20), Tab = RGB(18, 18, 14), Outline = RGB(54, 54, 40), Inline = RGB(32, 32, 26),
+		Text = RGB(242, 242, 226), InactiveText = RGB(134, 134, 112), Accent = RGB(255, 250, 76), Element = RGB(32, 32, 26),
+		Gradient = RGB(170, 170, 158), Shadow = RGB(0, 0, 0), HoveredElement = RGB(58, 58, 44),
+	},
+	Obsidian = {
+		Background = RGB(16, 16, 18), Tab = RGB(12, 11, 14), Outline = RGB(44, 42, 52), Inline = RGB(24, 24, 29),
+		Text = RGB(234, 232, 244), InactiveText = RGB(118, 114, 134), Accent = RGB(159, 109, 255), Element = RGB(24, 23, 31),
+		Gradient = RGB(166, 164, 175), Shadow = RGB(0, 0, 0), HoveredElement = RGB(236, 240, 248),
+	},
+	["Sakura Drift"] = {
+		Background = RGB(38, 28, 34), Tab = RGB(32, 23, 29), Outline = RGB(70, 50, 62), Inline = RGB(48, 35, 43),
+		Text = RGB(248, 234, 242), InactiveText = RGB(150, 122, 138), Accent = RGB(255, 155, 205), Element = RGB(44, 46, 48),
+		Gradient = RGB(176, 166, 172), Shadow = RGB(0, 0, 0), HoveredElement = RGB(77, 53, 67),
+	},
+	["Neon Mirage"] = {
+		Background = RGB(22, 16, 34), Tab = RGB(17, 12, 28), Outline = RGB(54, 40, 82), Inline = RGB(32, 23, 48),
+		Text = RGB(238, 232, 252), InactiveText = RGB(128, 114, 160), Accent = RGB(255, 86, 255), Element = RGB(30, 21, 46),
+		Gradient = RGB(144, 163, 182), Shadow = RGB(0, 0, 0), HoveredElement = RGB(56, 39, 84),
+	},
+	["Copper Dust"] = {
+		Background = RGB(39, 30, 25), Tab = RGB(34, 25, 20), Outline = RGB(72, 54, 42), Inline = RGB(49, 36, 28),
+		Text = RGB(244, 232, 220), InactiveText = RGB(148, 124, 104), Accent = RGB(243, 152, 86), Element = RGB(51, 34, 22),
+		Gradient = RGB(173, 164, 155), Shadow = RGB(0, 0, 0), HoveredElement = RGB(77, 56, 42),
+	},
+	Abyss = {
+		Background = RGB(12, 20, 28), Tab = RGB(8, 15, 22), Outline = RGB(30, 48, 62), Inline = RGB(18, 30, 40),
+		Text = RGB(222, 236, 246), InactiveText = RGB(100, 128, 148), Accent = RGB(52, 176, 238), Element = RGB(16, 28, 38),
+		Gradient = RGB(158, 169, 176), Shadow = RGB(0, 0, 0), HoveredElement = RGB(32, 51, 67),
+	},
+	Porcelain = {
+		Background = RGB(250, 248, 244), Tab = RGB(236, 234, 230), Outline = RGB(214, 212, 208), Inline = RGB(255, 255, 255),
+		Text = RGB(44, 46, 54), InactiveText = RGB(140, 142, 150), Accent = RGB(133, 176, 255), Element = RGB(255, 255, 255),
+		Gradient = RGB(214, 218, 226), Shadow = RGB(120, 120, 120), HoveredElement = RGB(255, 255, 255),
+	},
+	Graphite = {
+		Background = RGB(32, 30, 30), Tab = RGB(40, 40, 40), Outline = RGB(58, 60, 62), Inline = RGB(42, 45, 46),
+		Text = RGB(236, 236, 250), InactiveText = RGB(128, 128, 134), Accent = RGB(105, 159, 237), Element = RGB(44, 46, 46),
+		Gradient = RGB(190, 190, 190), Shadow = RGB(0, 0, 0), HoveredElement = RGB(67, 70, 72),
+	},
+}
+	local ThemeOrder = { "Blossom", "Afterglow", "Frostbite", "Volt", "Obsidian", "Sakura Drift", "Neon Mirage", "Copper Dust", "Abyss", "Porcelain", "Graphite" }
 	Library.Themes = Themes
 	Library.ThemeOrder = ThemeOrder
 	Library.ThemeKeys = ThemeKeys
