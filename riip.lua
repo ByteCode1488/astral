@@ -1,25 +1,3 @@
---!nocheck
---[[
-	Blossom UI Library (single file)
-
-	local Blossom = loadstring(readfile("Blossom.luau"))()      -- executor
-	local Blossom = require(path.to.Blossom)                    -- Studio
-
-	local Window = Blossom.new({ Title = "Blossom", Script = "blossom.lua", Build = "operation one" })
-	Window:Category("Combat")
-	local Rage = Window:Tab({ Name = "Rage", Icon = "target" })
-	local Main = Rage:Section({ Name = "Main", Icon = "robot", Side = 1 })
-	Main:Toggle({ Name = "Enabled", Default = true, Keybind = Enum.KeyCode.C, Callback = print })
-
-	Elements: Toggle, Slider, RangeSlider, Dropdown, Colorpicker, Keybind, Button,
-	          Textbox, Label, Divider, Listbox.
-	Toggle and Label also accept Keybind = and Color = for inline controls.
-	Every element returns an object with .Value and :Set(value, silent).
-
-	Options for Blossom.new: Title, Script, Build, Theme, MenuKey, Font (a font family string),
-	Size and MinSize (Vector2), Resizable (default true). Window:SetSize(width, height) resizes from code.
-]]
-
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
